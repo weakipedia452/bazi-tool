@@ -1,26 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     
+    <!-- 字体 -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- 样式标准化 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     
-    <title>bazi calculator</title>
+    <title>水晶能量八字分析</title>
+    <style>
+      :root {
+        --crystal-purple: #9b59b6;
+        --crystal-blue: #3498db;
+        --crystal-green: #2ecc71;
+        --crystal-bg: #f8f9fa;
+      }
 
-    
+      body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        font-family: 'Ma Shan Zheng', cursive;
+        color: var(--crystal-purple);
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-section {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      label {
+        color: var(--crystal-purple);
+        font-weight: 500;
+        min-width: 80px;
+      }
+
+      input, select {
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        flex: 1;
+        transition: all 0.3s ease;
+      }
+
+      input:focus, select:focus {
+        border-color: var(--crystal-blue);
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+      }
+
+      button {
+        background: var(--crystal-purple);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+      }
+
+      .result-section {
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(245, 245, 245, 0.9);
+        border-radius: 12px;
+      }
+
+      .wuxing-grid {
+        display: grid;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .element-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-radius: 8px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+
+      .element-item:hover {
+        transform: translateX(10px);
+      }
+
+      .element-bar {
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0.3;
+        transition: width 0.5s ease;
+      }
+
+      .element-label {
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-weight: bold;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      /* 五行颜色 */
+      .metal { background: #ffd700; }
+      .wood { background: #2ecc71; }
+      .water { background: #3498db; }
+      .fire { background: #e74c3c; }
+      .earth { background: #d35400; }
+    </style>
   </head>
   <body>
-    <noscript>
-      bazi calculator is a JavaScript app. Please enable JavaScript to continue.
-    </noscript>
-    <div id="app"></div>
-    <script src="js/compiled/app.js"></script>
-    <script>
-</script>
+    <div class="container">
+      <h1>水晶能量八字分析</h1>
+      
+      <div class="input-section">
+        <div class="input-group">
+          <label>出生日期：</label>
+          <input type="date" id="birthdate">
+        </div>
+        <div class="input-group">
+          <label>出生时间：</label>
+          <input type="time" id="birthtime">
+        </div>
+        <button onclick="calculateBazi()">分析能量</button>
+      </div>
 
+      <div class="result-section">
+        <h2>您的五行能量分布</h2>
+        <div class="wuxing-grid">
+          <div class="element-item water">
+            <div class="element-bar" style="width: 30%"></div>
+            <div class="element-label">
+              <span>水能量</span>
+              <span>30%</span>
+            </div>
+          </div>
+          <div class="element-item wood">
+            <div class="element-bar" style="width: 25%"></div>
+            <div class="element-label">
+              <span>木能量</span>
+              <span>25%</span>
+            </div>
+          </div>
+          <div class="element-item fire">
+            <div class="element-bar" style="width: 20%"></div>
+            <div class="element-label">
+              <span>火能量</span>
+              <span>20%</span>
+            </div>
+          </div>
+          <div class="element-item earth">
+            <div class="element-bar" style="width: 15%"></div>
+            <div class="element-label">
+              <span>土能量</span>
+              <span>15%</span>
+            </div>
+          </div>
+          <div class="element-item metal">
+            <div class="element-bar" style="width: 10%"></div>
+            <div class="element-label">
+              <span>金能量</span>
+              <span>10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function calculateBazi() {
+        <script src="js/compiled/app.js"></script>
+        const elements = {
+          water: 30,
+          wood: 25,
+          fire: 20,
+          earth: 15,
+          metal: 10
+        };
+        updateChart(elements);
+      }
+
+      function updateChart(elements) {
+        document.querySelectorAll('.element-bar').forEach(bar => {
+          const element = bar.parentElement.classList[1];
+          bar.style.width = `${elements[element]}%`;
+          bar.parentElement.querySelector('span:last-child').textContent = 
+            `${elements[element]}%`;
+        });
+      }
+    </script>
   </body>
 </html>
+
