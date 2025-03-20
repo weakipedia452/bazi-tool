@@ -1,26 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     
-    <title>bazi calculator</title>
+    <title>Bazi Calculator</title>
+    <style>
+        :root {
+            --wood: #78c850;
+            --fire: #f08030;
+            --earth: #e0c068;
+            --metal: #b8a038;
+            --water: #6890f0;
+        }
 
-    
-  </head>
-  <body>
-    <noscript>
-      bazi calculator is a JavaScript app. Please enable JavaScript to continue.
-    </noscript>
-    <div id="app"></div>
-    <script src="js/compiled/app.js"></script>
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bazi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .bazi-pillar {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .element-chart {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            height: 250px;
+            align-items: flex-end;
+            margin: 40px 0;
+        }
+
+        .element-bar {
+            width: 60px;
+            background: #ddd;
+            border-radius: 8px 8px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+        }
+
+        .element-label {
+            position: absolute;
+            bottom: -30px;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+        }
+
+        .product-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-name {
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            background: #f8f9fa;
+        }
+
+        .analysis-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .bazi-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .element-chart {
+                height: 200px;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align:center; margin:30px 0">Bazi & Five Elements Analysis</h1>
+        
+        <div class="bazi-grid" id="baziDisplay">
+            <!-- Bazi pillars will be dynamically inserted here -->
+        </div>
+
+        <div class="element-chart" id="elementChart">
+            <!-- Element bars will be dynamically inserted here -->
+        </div>
+
+        <div class="analysis-section">
+            <h3>Elemental Analysis</h3>
+            <p id="analysisText">Loading analysis...</p>
+        </div>
+
+        <div class="products-grid" id="productRecommendations">
+            <!-- Product cards will be dynamically inserted here -->
+        </div>
+    </div>
+
     <script>
-</script>
+        // Sample data binding - Replace with real data from your app.js
+        function initializeDemo() {
+            // Bazi Pillars
+            const pillars = [
+                { text: '甲子', element: 'wood' },
+                { text: '乙丑', element: 'earth' },
+                { text: '丙寅', element: 'fire' },
+                { text: '丁卯', element: 'wood' }
+            ];
+            
+            document.getElementById('baziDisplay').innerHTML = pillars
+                .map(p => `
+                    <div class="bazi-pillar ${p.element}" style="background:var(--${p.element})">
+                        ${p.text}
+                    </div>
+                `).join('');
 
-  </body>
+            // Element Chart
+            const elements = [
+                { name: 'wood', value: 35 },
+                { name: 'fire', value: 20 },
+                { name: 'earth', value: 15 },
+                { name: 'metal', value: 25 },
+                { name: 'water', value: 30 }
+            ];
+            
+            document.getElementById('elementChart').innerHTML = elements
+                .map(e => `
+                    <div class="element-bar" style="height:${e.value}%;background:var(--${e.name})">
+                        <div class="element-label">${e.name} ${e.value}%</div>
+                    </div>
+                `).join('');
+
+            // Product Recommendations
+            const products = [
+                { name: 'Green Ghost Crystal', element: 'wood', image: 'https://example.com/wood-product.jpg' },
+                { name: 'Red Agate Bracelet', element: 'fire', image: 'https://example.com/fire-product.jpg' },
+                { name: 'Yellow Jade Pendant', element: 'earth', image: 'https://example.com/earth-product.jpg' },
+                { name: 'Metal Wind Chime', element: 'metal', image: 'https://example.com/metal-product.jpg' },
+                { name: 'Blue Lace Bracelet', element: 'water', image: 'https://example.com/water-product.jpg' }
+            ];
+            
+            document.getElementById('productRecommendations').innerHTML = products
+                .map(p => `
+                    <div class="product-card">
+                        <div class="product-image" style="background-image:url('${p.image}')"></div>
+                        <div class="product-name">${p.name}</div>
+                    </div>
+                `).join('');
+        }
+
+        window.onload = initializeDemo;
+    </script>
+</body>
 </html>
+
