@@ -19,5 +19,30 @@
     </noscript>
     <div id="app"></div>
     <script src="js/compiled/app.js"></script>
+    <script>
+// 当页面加载完成后执行
+window.onload = function() {
+  // 获取五行数据（根据你的页面元素修改选择器）
+  const getElementValue = (className) => {
+    const el = document.querySelector('.' + className);
+    return parseFloat(el.style.width) || 0;
+  };
+
+  const elements = {
+    wood: getElementValue('wood-progress'),
+    fire: getElementValue('fire-progress'),
+    earth: getElementValue('earth-progress'),
+    metal: getElementValue('metal-progress'),
+    water: getElementValue('water-progress')
+  };
+
+  // 发送数据给父页面（Shopify）
+  window.parent.postMessage({
+    type: 'baziElements',
+    data: elements
+  }, '*');
+};
+</script>
+
   </body>
 </html>
