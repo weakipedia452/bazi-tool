@@ -1,148 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
+<html lang="en">
+  <head>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <!-- 增加图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        :root {
-            --metal: #FFD700;    /* 金 */
-            --wood: #4CAF50;     /* 木 */
-            --water: #2196F3;    /* 水 */
-            --fire: #F44336;     /* 火 */
-            --earth: #9C27B0;    /* 土 */
-        }
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <title>bazi calculator</title>
 
-        body {
-            font-family: 'Ubuntu', 'Microsoft Yahei', sans-serif;
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        /* 主信息面板 */
-        .profile-header {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .basic-info {
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 8px;
-        }
-
-        /* 五行能量环状图 */
-        .element-wheel {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-        }
-
-        /* 详细数据面板 */
-        .data-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .data-card {
-            padding: 1.5rem;
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            transition: transform 0.2s;
-        }
-
-        .data-card:hover {
-            transform: translateY(-3px);
-        }
-
-        /* 分类标签 */
-        .pillar-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin: 2px;
-        }
-
-        /* 特殊命理标记 */
-        .special-mark {
-            color: #d32f2f;
-            font-weight: bold;
-            border-left: 3px solid #d32f2f;
-            padding-left: 8px;
-            margin: 4px 0;
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- 基本信息区 -->
-        <div class="profile-header">
-            <div class="basic-info">
-                <h2>命盘信息 <i class="fas fa-user-astronaut"></i></h2>
-                <div id="birthInfo"></div>
-                <div id="gender"></div>
-            </div>
-            
-            <!-- 五行环状图 -->
-            <div class="element-wheel">
-                <!-- 将通过canvas或SVG实现 -->
-            </div>
-        </div>
-
-        <!-- 详细数据区 -->
-        <div class="data-section">
-            <!-- 天干地支分布 -->
-            <div class="data-card">
-                <h3><i class="fas fa-yin-yang"></i> 天干分布</h3>
-                <div id="stemDistribution"></div>
-            </div>
-
-            <!-- 五行力量 -->
-            <div class="data-card">
-                <h3><i class="fas fa-dumbbell"></i> 五行力量</h3>
-                <div id="elementStrength"></div>
-            </div>
-
-            <!-- 特殊命理 -->
-            <div class="data-card">
-                <h3><i class="fas fa-star"></i> 特殊格局</h3>
-                <div id="specialPatterns"></div>
-            </div>
-
-            <!-- 时间柱信息 -->
-            <div class="data-card">
-                <h3><i class="fas fa-clock"></i> 四柱分析</h3>
-                <div id="pillarAnalysis"></div>
-            </div>
-        </div>
-    </div>
-
+    
+  </head>
+  <body>
+    <noscript>
+      bazi calculator is a JavaScript app. Please enable JavaScript to continue.
+    </noscript>
+    <div id="app"></div>
     <script src="js/compiled/app.js"></script>
-</body>
+    <script>
+</script>
+
+  </body>
 </html>
+
